@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "452445727251",
+    "project_id": "secadorinteligenteiot",
+    "storage_bucket": "secadorinteligenteiot.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:452445727251:android:df6d00c8dbf86ef0116de6",
+        "android_client_info": {
+          "package_name": "com.example.secadointeligenteiot"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBmgI0qeBF8dZar8VcEXVmRMnm2R1VvITo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
