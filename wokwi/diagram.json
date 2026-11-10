@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "author": "Leonel Barraza",
+  "editor": "wokwi",
+  "parts": [
+    { "type": "board-esp32-devkit-c-v4", "id": "esp", "top": 0, "left": 0, "attrs": {} },
+    { "type": "wokwi-dht22", "id": "dht1", "top": -57.3, "left": 138.6, "attrs": { "temperature": "24", "humidity": "60" } },
+    { "type": "wokwi-led", "id": "ledVent", "top": 150, "left": 225, "attrs": { "color": "green" } },
+    { "type": "wokwi-led", "id": "ledCal", "top": 150, "left": 275, "attrs": { "color": "red" } }
+  ],
+  "connections": [
+    [ "esp:TX", "$serialMonitor:RX", "", [] ],
+    [ "esp:RX", "$serialMonitor:TX", "", [] ],
+    [ "dht1:VCC", "esp:3V3", "red", [ "v0" ] ],
+    [ "dht1:GND", "esp:GND.1", "black", [ "v0" ] ],
+    [ "dht1:SDA", "esp:15", "green", [ "v0" ] ],
+    [ "ledVent:A", "esp:26", "green", [ "v0" ] ],
+    [ "ledVent:C", "esp:GND.1", "black", [ "v0" ] ],
+    [ "ledCal:A", "esp:27", "red", [ "v0" ] ],
+    [ "ledCal:C", "esp:GND.1", "black", [ "v0" ] ]
+  ],
+  "dependencies": {}
+}
