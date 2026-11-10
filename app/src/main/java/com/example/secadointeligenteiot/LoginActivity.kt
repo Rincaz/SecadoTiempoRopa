@@ -14,33 +14,43 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
-
         auth = FirebaseAuth.getInstance()
+
+        // Sesión ya iniciada (Firebase la mantiene cifrada en el equipo): entrar directo.
+        if (auth.currentUser != null) {
+            irAPrincipal()
+            return
+        }
+        setContentView(R.layout.activity_login)
 
         val etEmail = findViewById<EditText>(R.id.etEmail)
         val etPassword = findViewById<EditText>(R.id.etPassword)
         val btnLogin = findViewById<Button>(R.id.btnLogin)
 
         btnLogin.setOnClickListener {
-            val email = etEmail.text.toString()
+            val email = etEmail.text.toString().trim()
             val password = etPassword.text.toString()
 
             if (email.isNotEmpty() && password.isNotEmpty()) {
-
+                btnLogin.isEnabled = false
                 auth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this) { task ->
+                        btnLogin.isEnabled = true
                         if (task.isSuccessful) {
-                            val intent = Intent(this, MainActivity::class.java)
-                            startActivity(intent)
-                            finish()
+                            irAPrincipal()
                         } else {
-                            Toast.makeText(this, "Error de credenciales", Toast.LENGTH_SHORT).show()
+                            // Mensaje genérico: no revela si el correo existe.
+                            Toast.makeText(this, "Error de credenciales o sin conexión", Toast.LENGTH_SHORT).show()
                         }
                     }
             } else {
                 Toast.makeText(this, "Completa todos los campos", Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    private fun irAPrincipal() {
+        startActivity(Intent(this, MainActivity::class.java))
+        finish()
     }
 }

@@ -2,4 +2,7 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="estado_ok">#FF2E7D32</color>
+    <color name="estado_aviso">#FFB45309</color>
+    <color name="estado_error">#FFC62828</color>
 </resources>

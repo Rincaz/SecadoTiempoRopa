@@ -1,0 +1,29 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "ConectarSoloComoSuPropioThing",
+      "Effect": "Allow",
+      "Action": "iot:Connect",
+      "Resource": "arn:aws:iot:us-east-1:CUENTA_AWS:client/${iot:Connection.Thing.ThingName}"
+    },
+    {
+      "Sid": "PublicarSoloEnSusTopics",
+      "Effect": "Allow",
+      "Action": "iot:Publish",
+      "Resource": [
+        "arn:aws:iot:us-east-1:CUENTA_AWS:topic/secadora/${iot:Connection.Thing.ThingName}/telemetria",
+        "arn:aws:iot:us-east-1:CUENTA_AWS:topic/secadora/${iot:Connection.Thing.ThingName}/ack"
+      ]
+    },
+    {
+      "Sid": "RecibirSoloSusComandos",
+      "Effect": "Allow",
+      "Action": ["iot:Subscribe", "iot:Receive"],
+      "Resource": [
+        "arn:aws:iot:us-east-1:CUENTA_AWS:topicfilter/secadora/${iot:Connection.Thing.ThingName}/comando",
+        "arn:aws:iot:us-east-1:CUENTA_AWS:topic/secadora/${iot:Connection.Thing.ThingName}/comando"
+      ]
+    }
+  ]
+}

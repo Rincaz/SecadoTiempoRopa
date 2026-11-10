@@ -1,0 +1,17 @@
+{
+  "dispositivo": "RaspberryVirtual",
+  "endpoint": "XXXXXXXXXXXXXX-ats.iot.us-east-1.amazonaws.com",
+  "puerto": 8883,
+  "ca": "certs/AmazonRootCA1.pem",
+  "cert": "certs/dispositivo.pem.crt",
+  "key": "certs/dispositivo.private.key",
+  "hmac_clave": "CAMBIAR-por-clave-larga-aleatoria",
+  "puerto_serial": null,
+  "baudios": 9600,
+  "buffer_db": "buffer.db",
+  "heartbeat_s": 60,
+  "umbral_temp": 1,
+  "umbral_hum": 2,
+  "comando_max_edad_s": 120,
+  "modo_seguro_s": 300
+}

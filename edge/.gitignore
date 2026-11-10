@@ -1,0 +1,8 @@
+config.json
+certs/
+*.pem
+*.key
+*.crt
+buffer.db
+__pycache__/
+.pytest_cache/
