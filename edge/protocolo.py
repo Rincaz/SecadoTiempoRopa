@@ -5,6 +5,8 @@ Contiene:
     (HH = checksum XOR en hexadecimal) -> detecta corrupción en el enlace serial.
   * Firma HMAC-SHA256 de los mensajes MQTT -> integridad y autenticidad extremo a extremo.
 """
+from __future__ import annotations
+
 import hashlib
 import hmac
 from functools import reduce
