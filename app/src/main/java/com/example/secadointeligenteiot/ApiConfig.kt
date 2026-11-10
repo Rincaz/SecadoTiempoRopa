@@ -7,6 +7,9 @@ object ApiConfig {
     /** Dispositivos registrados (deben coincidir con DISPOSITIVOS de la Lambda). */
     val DISPOSITIVOS = listOf("RaspberryVirtual", "RaspberrySecadora2")
 
+    /** Control de actuadores: se activa (true) cuando se conecten los dispositivos externos. */
+    const val ACTUADORES_HABILITADOS = false
+
     const val TIMEOUT_MS = 8_000
     const val INTERVALO_NORMAL_MS = 10_000L
     const val INTERVALO_AHORRO_MS = 60_000L

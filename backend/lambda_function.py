@@ -129,7 +129,12 @@ def _estado_integridad(item) -> str:
 
 def _publico(item) -> dict:
     """Sólo los campos que la app necesita (minimización de datos)."""
-    ts_dev = int(item.get("ts_dispositivo", 0))
+    ts_dev = int(item.get("ts_dispositivo", 0) or 0)
+    if not ts_dev:                      # registros antiguos: usar el timestamp que agrega la regla de IoT
+        v = item.get(os.environ.get("SK_NAME", "timestamp"))
+        if v is not None:
+            v = float(v)
+            ts_dev = int(v / 1000) if v > 1e11 else int(v)
     return {
         "dispositivo": item.get("dispositivo"),
         "temperatura": item.get("temperatura"), "humedad": item.get("humedad"),
@@ -200,7 +205,10 @@ RUTAS = {
 
 
 def lambda_handler(event, context):
-    ruta = RUTAS.get(event.get("routeKey"))
+    clave = event.get("routeKey")
+    if not clave or clave == "$default":   # payload 1.0 u otra integración: reconstruir la ruta
+        clave = f"{event.get('httpMethod', '')} {event.get('resource') or event.get('path', '')}"
+    ruta = RUTAS.get(clave)
     if not ruta:
         return _resp(404, {"error": "ruta no encontrada"})
     try:

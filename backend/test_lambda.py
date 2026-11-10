@@ -87,3 +87,17 @@ def test_historial_orden_cronologico(monkeypatch):
                         lambda disp, **k: [item(timestamp=3), item(timestamp=2), item(timestamp=1)])
     r = json.loads(lf.lambda_handler({"routeKey": "GET /HistorialClima"}, None)["body"])
     assert [x["timestamp"] for x in r["registros"]] == [1, 2, 3]
+
+
+def test_registro_antiguo_sin_firma_ni_ts_dispositivo(monkeypatch):
+    antiguo = {"dispositivo": "RaspberryVirtual", "temperatura": 22, "humedad": 70,
+               "tiempo_estimado_minutos": 90, "timestamp": int(time.time() * 1000)}
+    monkeypatch.setattr(lf, "_consultar", lambda disp, **k: [antiguo])
+    r = json.loads(lf.lambda_handler({"routeKey": "GET /ObtenerClima"}, None)["body"])
+    assert r["integridad"] == "sin_firma" and r["en_linea"] is True
+
+
+def test_ruta_con_payload_1_0(monkeypatch):
+    monkeypatch.setattr(lf, "_consultar", lambda disp, **k: [item()])
+    ev = {"httpMethod": "GET", "resource": "/ObtenerClima"}
+    assert lf.lambda_handler(ev, None)["statusCode"] == 200

@@ -5,6 +5,16 @@
 > credenciales AWS**: habla con API Gateway y se autentica con su token de **Firebase Auth**.
 > Región usada: `us-east-1`.
 
+## Atajo: despliegue automático con CloudShell
+En la consola de AWS abre **CloudShell** (icono `>_` arriba) y ejecuta:
+```bash
+git clone -b unidad3-comunicacion-segura https://github.com/Rincaz/SecadoTiempoRopa.git
+cd SecadoTiempoRopa/backend && bash desplegar.sh      # Lambda + variables + rutas + prueba
+bash proteger_api.sh                                  # después de comprobar que funciona: exige token Firebase
+```
+`desplegar.sh` detecta solo las claves de tu tabla, conserva las variables que ya tenías y es repetible.
+Los pasos manuales de abajo hacen lo mismo y sirven como referencia.
+
 ## 1. DynamoDB
 Tabla `DatosClima`. Claves esperadas por la Lambda (ajuste `PK_NAME`/`SK_NAME` si la suya es distinta):
 - Partition key `dispositivo` (String) · Sort key `timestamp` (Number)

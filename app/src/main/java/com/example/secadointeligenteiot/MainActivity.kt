@@ -78,9 +78,16 @@ class MainActivity : AppCompatActivity() {
         }
 
         configurarDispositivos()
-        // setOnClickListener sólo se dispara por toques del usuario (no al actualizar el switch por código).
-        swVentilador.setOnClickListener { enviarComando("ventilador", swVentilador.isChecked) }
-        swCalefactor.setOnClickListener { enviarComando("calefactor", swCalefactor.isChecked) }
+        if (ApiConfig.ACTUADORES_HABILITADOS) {
+            // setOnClickListener sólo se dispara por toques del usuario (no al actualizar el switch por código).
+            swVentilador.setOnClickListener { enviarComando("ventilador", swVentilador.isChecked) }
+            swCalefactor.setOnClickListener { enviarComando("calefactor", swCalefactor.isChecked) }
+        } else {
+            // Función futura: requiere dispositivos externos (ventilador / calefactor reales).
+            swVentilador.isEnabled = false
+            swCalefactor.isEnabled = false
+            tvAccion.text = "Próximamente: se activará al conectar los dispositivos externos."
+        }
         findViewById<MaterialButton>(R.id.btnSalir).setOnClickListener { cerrarSesion() }
 
         // Sólo consulta mientras la pantalla está visible (STARTED): en segundo plano no gasta batería ni datos.
@@ -236,6 +243,7 @@ class MainActivity : AppCompatActivity() {
 
     /** Muestra el estado REAL del actuador; mientras hay un comando en curso respeta lo que pidió el usuario. */
     private fun aplicarActuador(sw: MaterialSwitch, nombre: String, real: Boolean) {
+        if (!ApiConfig.ACTUADORES_HABILITADOS) return
         val pedido = esperando[nombre]
         if (pedido != null) {
             if (pedido.first == real || System.currentTimeMillis() > pedido.second) esperando.remove(nombre) else return
